@@ -31,6 +31,34 @@ class Stock:
                 items[product] = count
         return items
 
+    def save(self, file_obj):
+        with open(file_obj, 'wt') as my_file:
+            for key, value in self.products.items():
+                line = key + ',' + str(value)+'\n'
+                my_file.write(line)
+
+    def save2(self, file_obj):
+        for product, count in self.products.items():
+            file_obj.write(product+','+str(count)+'\n')
+
+    def save3(self, file_obj):
+        lines=[prod+','+str(count)+'\n' for prod, count in self.products.items()]
+        file_obj.writelines(lines)
+
+
+    @staticmethod
+    def load(file_obj):
+        data={}
+        for line in file_obj:
+            record=line.rstrip('\r\n').split(',')
+            data[record[0]]=int(record[1])
+        return Stock(data)
+
+
+    @staticmethod
+    def foo(a):
+        print('Static method called!',a)
+
 
 stock = Stock({'chair':5, 'table':2})
 stock.resupply('curtains', 4)
@@ -38,7 +66,15 @@ stock.withdraw('chair' ,1)
 print(stock.products)
 
 products = {'oragne' :2, 'lemon':3}
-stock = Stock(products)
-print(stock.products)
-products['orange']=-500
-print(stock.products)
+
+stock.save('stock.csv')
+
+with open('magazyn.csv', 'wt') as data_file:
+    stock.save2(data_file)
+
+with open('magazyn2.csv', 'wt') as data_file:
+    stock.save3(data_file)
+
+with open('magazyn.csv', 'rt') as data_file:
+    stock2=Stock.load(data_file)
+    print(stock2.available_items())

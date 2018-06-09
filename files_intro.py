@@ -19,3 +19,14 @@ except OSError as err:
 
 with open('plik3.txt', 'wt') as out_file:
     out_file.write('jakiś tekst')
+
+with open('plik.txt') as my_file:
+    lines = my_file.readlines()
+    print(lines)
+
+with open('plik.txt') as my_file:
+    for line in my_file:
+        print(line)
+
+text = 'some text\n'
+print(text.strip('\r\n'))

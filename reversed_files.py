@@ -9,4 +9,7 @@ def reversed1(path_put, path_save):
     except OSError as err:
         print(err)
 
-reversed1('plik.txt', 'plik4.txt')
+if __name__ == '__main__':
+    reversed1('plik.txt', 'plik4.txt')
+
+
